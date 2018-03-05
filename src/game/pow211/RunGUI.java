@@ -19,10 +19,8 @@ public class RunGUI {
 //		GameSelectView gs = new GameSelectView();
 		
 		RunGUI run1 = new RunGUI();
-		Game2048Manager gm = new Game2048Manager(); 
-		gm.gameManager();
+		run1.NullLayout2048 = new NullLayout2048();
 		
-		//run1.NullLayout2048 = new NullLayout2048();
 		
 	}
 

@@ -27,15 +27,17 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 	//public JTextField textFieldBig;
 	public JPanel textFieldBig;
 	private JPanel panel;
+	
 	private static final int SIZE = 4;
-
+	static int score = 0, highScore = 0; // 현재 점수, 최고 점수
 //	private GameSelectView GameSelectView;
 
 	private ShowRanking ShowRanking;
 	// private JFrame rankingJFrame;
 	private boolean showRanking;
 	private boolean gameSelect;
-
+	private static Tile[][] tile;
+	
 	// private boolean game2048;
 
 	public NullLayout2048() {
@@ -189,8 +191,8 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				tf[i][j].setColumns(10);
 				tf[i][j].setBounds(setX, setY, 88, 88);
 				tf[i][j].setEditable(false);
-				tf[i][j].setText("0");
-				tf[i][j].setForeground(Color.YELLOW);
+				//tf[i][j].setForeground(Color.YELLOW);
+				//tf[i][j].setText("0");
 				tf[i][j].setFont(new Font("바탕", Font.BOLD, 60));
 				tf[i][j].setHorizontalAlignment(JTextField.CENTER);
 				tf[i][j].setFocusable(false); // focus를 제거
@@ -203,111 +205,6 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 
 		getContentPane().add(textFieldBig, BorderLayout.SOUTH);
 
-		/*
-		 * textField = new RoundJTextField(15); textField.setColumns(10); //
-		 * textField.setBorder(BorderFactory.createEmptyBorder()); // 경계선 제거 상태
-		 * textField.setBounds(88, 10, 88, 88); textField.setEditable(false); //
-		 * 수정 불가능하게 만듦 textFieldBig.add(textField);
-		 * 
-		 * textField_1 = new RoundJTextField(15); textField_1.setColumns(10); //
-		 * textField_1.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * // 경계선 두께 5, 경계선 색상 = 빨강 textField_1.setBounds(188, 10, 88, 88);
-		 * textField_1.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_1);
-		 * 
-		 * textField_2 = new RoundJTextField(15); textField_2.setColumns(10); //
-		 * textField_2.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_2.setBounds(288, 10, 88, 88);
-		 * textField_2.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_2);
-		 * 
-		 * textField_3 = new RoundJTextField(15); textField_3.setColumns(10); //
-		 * textField_3.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_3.setBounds(388, 10, 88, 88);
-		 * textField_3.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_3);
-		 * 
-		 * textField_4 = new RoundJTextField(15); textField_4.setColumns(10); //
-		 * textField_4.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_4.setBounds(88, 110, 88, 88);
-		 * textField_4.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_4);
-		 * 
-		 * textField_5 = new RoundJTextField(15); textField_5.setColumns(10); //
-		 * textField_5.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_5.setBounds(188, 110, 88, 88);
-		 * textField_5.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_5);
-		 * 
-		 * textField_6 = new RoundJTextField(15); textField_6.setColumns(10); //
-		 * textField_6.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_6.setBounds(288, 110, 88, 88);
-		 * textField_6.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_6);
-		 * 
-		 * textField_7 = new RoundJTextField(15); textField_7.setColumns(10); //
-		 * textField_7.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_7.setBounds(388, 110, 88, 88);
-		 * textField_7.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_7);
-		 * 
-		 * textField_8 = new RoundJTextField(15); textField_8.setColumns(10); //
-		 * textField_8.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_8.setBounds(88, 210, 88, 88);
-		 * textField_8.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_8);
-		 * 
-		 * textField_9 = new RoundJTextField(15); textField_9.setColumns(10); //
-		 * textField_9.setBorder(BorderFactory.createLineBorder(Color.RED, 5));
-		 * textField_9.setBounds(188, 210, 88, 88);
-		 * textField_9.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_9);
-		 * 
-		 * textField_10 = new RoundJTextField(15); textField_10.setColumns(10);
-		 * // textField_10.setBorder(BorderFactory.createLineBorder(Color.RED,
-		 * 5)); textField_10.setBounds(288, 210, 88, 88);
-		 * textField_10.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_10);
-		 * 
-		 * textField_11 = new RoundJTextField(15); textField_11.setColumns(10);
-		 * // textField_11.setBorder(BorderFactory.createLineBorder(Color.RED,
-		 * 5)); textField_11.setBounds(388, 210, 88, 88);
-		 * textField_11.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_11);
-		 * 
-		 * textField_12 = new RoundJTextField(15); textField_12.setColumns(10);
-		 * // textField_12.setBorder(BorderFactory.createLineBorder(Color.RED,
-		 * 5)); textField_12.setBounds(88, 310, 88, 88);
-		 * textField_12.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_12);
-		 * 
-		 * textField_13 = new RoundJTextField(15); textField_13.setColumns(10);
-		 * // textField_13.setBorder(BorderFactory.createLineBorder(Color.RED,
-		 * 5)); textField_13.setBounds(188, 310, 88, 88);
-		 * textField_13.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_13);
-		 * 
-		 * textField_14 = new RoundJTextField(15); textField_14.setColumns(10);
-		 * // textField_14.setBorder(BorderFactory.createLineBorder(Color.RED,
-		 * 5)); textField_14.setBounds(288, 310, 88, 88);
-		 * textField_14.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_14);
-		 * 
-		 * textField_15 = new RoundJTextField(15); textField_15.setColumns(10);
-		 * // textField_15.setBorder(BorderFactory.createLineBorder(Color.RED,
-		 * 5)); textField_15.setBounds(388, 310, 88, 88);
-		 * textField_15.setEditable(false); // 수정 불가능하게 만듦
-		 * textFieldBig.add(textField_15);
-		 * 
-		 * getContentPane().add(textFieldBig, BorderLayout.SOUTH);
-		 */
-		/*
-		 * //textField 이름으로 접근 for(int i =0 ;i<16;i++){ String str =
-		 * Integer.valueOf(i).toString(); String tf = "textField_"+str; Object o
-		 * = tf; ((JTextField)o).setText("0");
-		 * 
-		 * }
-		 */
 		panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBounds(0, 235, 984, 426);
@@ -324,7 +221,8 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		this.setFocusable(true);  // focus를 락온		
 		setFocusTraversalKeysEnabled(false);  // 다중 키를 인식해라
 		this.setVisible(true);
-
+		
+		gameStarter();
 	}
 
 	/*
@@ -347,19 +245,165 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		System.out.println("snfflfa");
 		
 		if(e.getKeyCode()==KeyEvent.VK_LEFT){
 			System.out.println("왼쪽 누름");
+			moveTile(tile, 0, 0, -1);
+			System.out.println("최고점수 : " + highScore);
+			System.out.println("현재점수 : " + score);
+			tile = putRandom(tile);
+			printTile(tile);
 		}
 		if(e.getKeyCode()==KeyEvent.VK_UP){
 			System.out.println("위쪽 누름");
+			printTile(moveTile(tile, 0, -1, 0));
+			System.out.println("최고점수 : " + highScore);
+			System.out.println("현재점수 : " + score);
+			tile = putRandom(tile);
+			printTile(tile);
 		}
 		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
 			System.out.println("오른쪽 누름");
+			moveTile(tile, SIZE * SIZE - 1, 0, 1);
+			System.out.println("최고점수 : " + highScore);
+			System.out.println("현재점수 : " + score);
+			tile = putRandom(tile);
+			printTile(tile);
 		}
 		if(e.getKeyCode()==KeyEvent.VK_DOWN){
 			System.out.println("아래쪽 누름");
+			moveTile(tile, SIZE * SIZE - 1, 1, 0);
+			System.out.println("최고점수 : " + highScore);
+			System.out.println("현재점수 : " + score);
+			tile = putRandom(tile);
+			printTile(tile);
+		}
+	}
+	
+
+	public static boolean isEmpty(Tile[][] tile) {
+		boolean result = false;
+
+		for (int i = 0; i < tile.length; i++) {
+			for (int j = 0; j < tile[i].length; j++) {
+				if (tile[i][j].getNum() == 0) {
+					result = true;
+				}
+			}
+		}
+		return result;
+	}
+
+	// 랜덤 추출
+	public static int[] random() {
+		int[] random = new int[3];
+		random[0] = (int) (Math.random() * 4);
+		random[1] = (int) (Math.random() * 4);
+		random[2] = (int) (Math.random() * 2) + 1;
+
+		return random;
+	}
+
+	// 비어있는곳에 랜덤으로 숫자놓기
+	public static Tile[][] putRandom(Tile[][] tile) {
+
+		while (isEmpty(tile)) {
+			int[] ran = random(); // ran[0]:세로 ran[1]:가로
+
+			if (tile[ran[0]][ran[1]].getNum() == 0) {
+				tile[ran[0]][ran[1]].setNum(ran[2] * 2);
+				System.out.println("============");
+				return tile;
+			}
+		}
+		System.out.println("더 이상 놓을자리가 없습니다");
+		System.out.println("게임 종료");
+		System.exit(0);
+		return tile;
+	}
+
+	public static Tile[][] setGame() {
+
+		Tile[][] tile = new Tile[4][4];
+
+		for (int i = 0; i < tile.length; i++) {
+			for (int j = 0; j < tile[i].length; j++) {
+				tile[i][j] = new Tile();
+			}
+		}
+		return tile;
+	}
+
+	public static void gameStarter() {
+		System.out.println("2048 새 게임 시작");
+
+		tile = setGame();
+		
+		tile = putRandom(tile);
+		printTile(tile);
+
+	}
+
+	public static Tile[][] moveTile(Tile[][] tile, int reveres, int row, int col) {
+
+		for (int k = 0; k < SIZE * SIZE; k++) {
+
+			int temp = Math.abs(reveres - k);
+
+			int i = temp / SIZE;
+			int j = temp % SIZE;
+
+			if (tile[i][j].getNum() == 0) {
+				continue;
+			}
+
+			int nextRow = i + row;
+			int nextCol = j + col;
+
+			while (nextRow >= 0 && nextRow < SIZE && nextCol >= 0 && nextCol < SIZE) {
+				Tile next = tile[nextRow][nextCol];
+
+				// tile[i][j]가 0이 아니고 next가 0일때
+				if (next.getNum() == 0) {
+					next.setNum(next.getNum() + tile[i][j].getNum());
+					tile[i][j].setNum(0);
+
+					i = nextRow;
+					j = nextCol;
+					nextRow += row;
+					nextCol += col;
+
+				} else if (tile[i][j].getNum() == next.getNum()) {
+
+					next.setNum(next.getNum() + tile[i][j].getNum());
+					score += next.getNum();
+					tile[i][j].setNum(0);
+
+					i = nextRow;
+					j = nextCol;
+					nextRow += row;
+					nextCol += col;
+
+					if (score > highScore) {
+						highScore = score;
+					}
+					break;
+				} else {
+					break;
+				}
+
+			}
+		}
+
+		return tile;
+	}
+
+	public static void printTile(Tile[][] tile) {
+		for (int i = 0; i < tile.length; i++) {
+			for (int j = 0; j < tile[i].length; j++) {
+				System.out.print(tile[i][j]);
+			}
+			System.out.println();
 		}
 	}
 
