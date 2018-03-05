@@ -182,6 +182,8 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		textFieldBig.setBounds(208, 242, 568, 409);
 		//textFieldBig.setEditable(false);
 
+		
+		//tf TextField 배열 초기화
 		tf = new RoundJTextField[SIZE][SIZE];
 		int setX = 88;
 		int setY = 10;
@@ -194,6 +196,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				tf[i][j].setEditable(false);
 				//tf[i][j].setForeground(Color.YELLOW);
 				//tf[i][j].setText("0");
+				tf[i][j].setText(null);
 				tf[i][j].setFont(new Font("바탕", Font.BOLD, 60));
 				tf[i][j].setHorizontalAlignment(JTextField.CENTER);
 				tf[i][j].setFocusable(false); // focus를 제거
@@ -284,7 +287,8 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 
 	public static boolean isEmpty(Tile[][] tile) {
 		boolean result = false;
-
+		
+		//x
 		for (int i = 0; i < tile.length; i++) {
 			for (int j = 0; j < tile[i].length; j++) {
 				if (tile[i][j].getNum() == 0) {
@@ -292,6 +296,16 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				}
 			}
 		}
+		
+		for (int i = 0; i < tf.length; i++) {
+			for (int j = 0; j < tf[i].length; j++) {
+				if (tf[i][j].getText() == null) {
+					result = true;
+				}
+			}
+		}
+		
+		
 		return result;
 	}
 
@@ -312,7 +326,8 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 			int[] ran = random(); // ran[0]:세로 ran[1]:가로
 
 			if (tile[ran[0]][ran[1]].getNum() == 0) {
-				tile[ran[0]][ran[1]].setNum(ran[2] * 2);
+				tile[ran[0]][ran[1]].setNum(ran[2] * 2);	//x
+				tf[ran[0]][ran[1]].setText(Integer.toString(ran[2] * 2));
 				System.out.println("============");
 				return tile;
 			}
@@ -332,6 +347,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				tile[i][j] = new Tile();
 			}
 		}
+		
 		return tile;
 	}
 
