@@ -37,6 +37,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 	private boolean showRanking;
 	private boolean gameSelect;
 	private static Tile[][] tile;
+	private static JTextField[][] tf;
 	
 	// private boolean game2048;
 
@@ -181,7 +182,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		textFieldBig.setBounds(208, 242, 568, 409);
 		//textFieldBig.setEditable(false);
 
-		JTextField[][] tf = new RoundJTextField[SIZE][SIZE];
+		tf = new RoundJTextField[SIZE][SIZE];
 		int setX = 88;
 		int setY = 10;
 
