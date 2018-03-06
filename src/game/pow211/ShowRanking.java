@@ -1,10 +1,16 @@
 package game.pow211;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class ShowRanking extends JFrame {
 
@@ -125,4 +131,55 @@ public class ShowRanking extends JFrame {
 		return game2048;
 	}
 
+}
+
+class Ranking {
+
+	private String gameName;
+	private String userID;
+	private int score;
+
+	public Ranking() {
+
+	}
+
+	public Ranking(String gameName, String userID, int score) {
+		this.gameName=gameName;
+		this.userID=userID;
+		this.score=score;
+	}
+
+	public String getGameName() {
+		return gameName;
+	}
+
+	public void setGameName(String gameName) {
+		this.gameName = gameName;
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	@Override
+	public String toString(){
+		return userID+" "+score;
+	}
+
+}
+
+class RankingManager{
+	
 }

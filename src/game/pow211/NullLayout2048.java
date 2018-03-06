@@ -160,7 +160,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		scoreBoard.setEditable(false); // 수정 불가능하게 만듦
 		scoreBoard.setFocusable(false); // focus를 제거
 		scoreBoard.setFont(scoreBoard.getFont().deriveFont(20.0f));
-		scoreBoard.setFont(new Font("바탕", Font.BOLD, 60));
+		scoreBoard.setFont(new Font("바탕", Font.BOLD, 40));
 		scoreBoard.setHorizontalAlignment(JTextField.CENTER);
 		// Font Size 조절
 		nullPanel1.add(scoreBoard);
@@ -200,10 +200,11 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				tf[i][j].setBounds(setX, setY, 88, 88);
 				tf[i][j].setEditable(false);
 				// tf[i][j].setForeground(Color.YELLOW);
-				tf[i][j].setFont(new Font("바탕", Font.BOLD, 60));
+				tf[i][j].setFont(new Font("바탕", Font.BOLD, 30));
 				tf[i][j].setHorizontalAlignment(JTextField.CENTER);
 				tf[i][j].setFocusable(false); // focus를 제거
 				textFieldBig.add(tf[i][j]);
+				
 
 				setX = (setX + 100) % 400;
 			}
