@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.MenuSelectionManager;
 
 
-public class RunGUI {
+public class RunGUI{
 
 	NullLayout2048 NullLayout2048;
 	ShowRanking ShowRanking;
@@ -20,7 +20,7 @@ public class RunGUI {
 		
 		RunGUI run1 = new RunGUI();
 		run1.NullLayout2048 = new NullLayout2048();
-		
+
 		
 	}
 

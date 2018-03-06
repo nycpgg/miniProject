@@ -24,13 +24,14 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 
 	// private RunGUI NullLayout2048;
 	private JPanel nullPanel1, nullPanel2, nullPanel3;
-	//public JTextField textFieldBig;
+	// public JTextField textFieldBig;
 	public JPanel textFieldBig;
 	private JPanel panel;
+	static JTextField scoreBoard;
 	
 	private static final int SIZE = 4;
 	static int score = 0, highScore = 0; // 현재 점수, 최고 점수
-//	private GameSelectView GameSelectView;
+	// private GameSelectView GameSelectView;
 
 	private ShowRanking ShowRanking;
 	// private JFrame rankingJFrame;
@@ -38,7 +39,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 	private boolean gameSelect;
 	private static Tile[][] tile;
 	private static JTextField[][] tf;
-	
+
 	// private boolean game2048;
 
 	public NullLayout2048() {
@@ -115,7 +116,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		Image smallSizeRankingImg = RankingImg.getImage();
 		Image changedRankingImg = smallSizeRankingImg.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon newRankingImg = new ImageIcon(changedRankingImg);
-				
+
 		JButton btnRanking = new JButton(newRankingImg);
 		btnRanking.setLocation(890, 100);
 		btnRanking.setSize(50, 50);
@@ -149,13 +150,16 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		// Font Size 조절
 		nullPanel1.add(score);
 
-		JTextField scoreBoard = new JTextField("");
+		scoreBoard = new JTextField("");
+		scoreBoard.setText("0");
 		scoreBoard.setLocation(719, 114);
 		scoreBoard.setSize(150, 96);
 		scoreBoard.setBorder(BorderFactory.createLineBorder(Color.black));
 		scoreBoard.setEditable(false); // 수정 불가능하게 만듦
 		scoreBoard.setFocusable(false); // focus를 제거
 		scoreBoard.setFont(scoreBoard.getFont().deriveFont(20.0f));
+		scoreBoard.setFont(new Font("바탕", Font.BOLD, 60));
+		scoreBoard.setHorizontalAlignment(JTextField.CENTER);
 		// Font Size 조절
 		nullPanel1.add(scoreBoard);
 		getContentPane().setLayout(null);
@@ -171,19 +175,18 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		// getContentPane().add(nullPanel2);
 		getContentPane().add(nullPanel1);
 
-		//textFieldBig = new RoundJTextField(15);
-		//textFieldBig.setColumns(20);
-		
+		// textFieldBig = new RoundJTextField(15);
+		// textFieldBig.setColumns(20);
+
 		textFieldBig = new RoundJPanel(15);
 		textFieldBig.setLayout(null);
 		textFieldBig.setBackground(Color.pink);
 		textFieldBig.setBorder(BorderFactory.createLineBorder(Color.orange, 55));
 		textFieldBig.setFocusable(false); // focus를 제거
 		textFieldBig.setBounds(208, 242, 568, 409);
-		//textFieldBig.setEditable(false);
+		// textFieldBig.setEditable(false);
 
-		
-		//tf TextField 배열 초기화
+		// tf TextField 배열 초기화
 		tf = new RoundJTextField[SIZE][SIZE];
 		int setX = 88;
 		int setY = 10;
@@ -194,9 +197,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				tf[i][j].setColumns(10);
 				tf[i][j].setBounds(setX, setY, 88, 88);
 				tf[i][j].setEditable(false);
-				//tf[i][j].setForeground(Color.YELLOW);
-				//tf[i][j].setText("0");
-				tf[i][j].setText(null);
+				// tf[i][j].setForeground(Color.YELLOW);
 				tf[i][j].setFont(new Font("바탕", Font.BOLD, 60));
 				tf[i][j].setHorizontalAlignment(JTextField.CENTER);
 				tf[i][j].setFocusable(false); // focus를 제거
@@ -221,12 +222,14 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		nullPanel3.setLayout(null);
 		add(nullPanel3);
 
-		addKeyListener(this);  // KeyListener를 상속받은 상태
-		this.setFocusable(true);  // focus를 락온		
-		setFocusTraversalKeysEnabled(false);  // 다중 키를 인식해라
+		addKeyListener(this); // KeyListener를 상속받은 상태
+		this.setFocusable(true); // focus를 락온
+		setFocusTraversalKeysEnabled(false); // 다중 키를 인식해라
 		this.setVisible(true);
 		
-		gameStarter();
+		setGame();
+		putRandom();
+
 	}
 
 	/*
@@ -239,72 +242,49 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		
-		if(e.getKeyCode()==KeyEvent.VK_LEFT){
-			System.out.println("왼쪽 누름");
-			moveTile(tile, 0, 0, -1);
-			System.out.println("최고점수 : " + highScore);
+
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			moveTile(0, 0, -1);
 			System.out.println("현재점수 : " + score);
-			tile = putRandom(tile);
-			printTile(tile);
+			putRandom();
 		}
-		if(e.getKeyCode()==KeyEvent.VK_UP){
-			System.out.println("위쪽 누름");
-			printTile(moveTile(tile, 0, -1, 0));
-			System.out.println("최고점수 : " + highScore);
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			moveTile(0, -1, 0);
 			System.out.println("현재점수 : " + score);
-			tile = putRandom(tile);
-			printTile(tile);
+			putRandom();
 		}
-		if(e.getKeyCode()==KeyEvent.VK_RIGHT){
-			System.out.println("오른쪽 누름");
-			moveTile(tile, SIZE * SIZE - 1, 0, 1);
-			System.out.println("최고점수 : " + highScore);
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			moveTile(SIZE * SIZE - 1, 0, 1);
 			System.out.println("현재점수 : " + score);
-			tile = putRandom(tile);
-			printTile(tile);
+			putRandom();
 		}
-		if(e.getKeyCode()==KeyEvent.VK_DOWN){
-			System.out.println("아래쪽 누름");
-			moveTile(tile, SIZE * SIZE - 1, 1, 0);
-			System.out.println("최고점수 : " + highScore);
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			moveTile(SIZE * SIZE - 1, 1, 0);
 			System.out.println("현재점수 : " + score);
-			tile = putRandom(tile);
-			printTile(tile);
+			putRandom();
 		}
 	}
-	
 
-	public static boolean isEmpty(Tile[][] tile) {
+	public static boolean isEmpty() {
 		boolean result = false;
-		
-		//x
-		for (int i = 0; i < tile.length; i++) {
-			for (int j = 0; j < tile[i].length; j++) {
-				if (tile[i][j].getNum() == 0) {
-					result = true;
-				}
-			}
-		}
-		
+
 		for (int i = 0; i < tf.length; i++) {
 			for (int j = 0; j < tf[i].length; j++) {
-				if (tf[i][j].getText() == null) {
+				if (tf[i][j].getText().equals("")) {
 					result = true;
 				}
 			}
 		}
-		
 		
 		return result;
 	}
@@ -320,48 +300,36 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 	}
 
 	// 비어있는곳에 랜덤으로 숫자놓기
-	public static Tile[][] putRandom(Tile[][] tile) {
 
-		while (isEmpty(tile)) {
+	public static void putRandom() {
+		System.out.println("랜덤 배치");
+		boolean result = false;
+
+		while (isEmpty()) {
 			int[] ran = random(); // ran[0]:세로 ran[1]:가로
 
-			if (tile[ran[0]][ran[1]].getNum() == 0) {
-				tile[ran[0]][ran[1]].setNum(ran[2] * 2);	//x
-				tf[ran[0]][ran[1]].setText(Integer.toString(ran[2] * 2));
-				System.out.println("============");
-				return tile;
+			if (tf[ran[0]][ran[1]].getText().equals("")) {
+				 tf[ran[0]][ran[1]].setText(Integer.toString(ran[2] * 2));
+				break;
 			}
 		}
-		System.out.println("더 이상 놓을자리가 없습니다");
+		System.out.println("더 이상 움직일 타일이 없습니다.");
 		System.out.println("게임 종료");
-		System.exit(0);
-		return tile;
+		return;
 	}
 
-	public static Tile[][] setGame() {
-
-		Tile[][] tile = new Tile[4][4];
-
-		for (int i = 0; i < tile.length; i++) {
-			for (int j = 0; j < tile[i].length; j++) {
-				tile[i][j] = new Tile();
-			}
-		}
-		
-		return tile;
-	}
-
-	public static void gameStarter() {
+	public static void setGame() {
 		System.out.println("2048 새 게임 시작");
 
-		tile = setGame();
-		
-		tile = putRandom(tile);
-		printTile(tile);
-
+		for (int i = 0; i < tf.length; i++) {
+			for (int j = 0; j < tf[i].length; j++) {
+				tf[i][j].setText("");
+			}
+		}
+		score = 0;
 	}
 
-	public static Tile[][] moveTile(Tile[][] tile, int reveres, int row, int col) {
+	public static void moveTile(int reveres, int row, int col) {
 
 		for (int k = 0; k < SIZE * SIZE; k++) {
 
@@ -370,7 +338,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 			int i = temp / SIZE;
 			int j = temp % SIZE;
 
-			if (tile[i][j].getNum() == 0) {
+			if (tf[i][j].getText().equals("")) {
 				continue;
 			}
 
@@ -378,23 +346,27 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 			int nextCol = j + col;
 
 			while (nextRow >= 0 && nextRow < SIZE && nextCol >= 0 && nextCol < SIZE) {
-				Tile next = tile[nextRow][nextCol];
+				JTextField next = tf[nextRow][nextCol];
 
 				// tile[i][j]가 0이 아니고 next가 0일때
-				if (next.getNum() == 0) {
-					next.setNum(next.getNum() + tile[i][j].getNum());
-					tile[i][j].setNum(0);
+				if (next.getText().equals("")) {
+					next.setText(tf[i][j].getText());
+
+					tf[i][j].setText("");
 
 					i = nextRow;
 					j = nextCol;
 					nextRow += row;
 					nextCol += col;
 
-				} else if (tile[i][j].getNum() == next.getNum()) {
+				} else if ((tf[i][j].getText().equals(next.getText()))) {
 
-					next.setNum(next.getNum() + tile[i][j].getNum());
-					score += next.getNum();
-					tile[i][j].setNum(0);
+					next.setText(
+							Integer.valueOf(Integer.parseInt(next.getText()) + Integer.parseInt(tf[i][j].getText()))
+									.toString());
+
+					score += Integer.parseInt(next.getText());
+					tf[i][j].setText("");
 
 					i = nextRow;
 					j = nextCol;
@@ -404,6 +376,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 					if (score > highScore) {
 						highScore = score;
 					}
+					scoreBoard.setText(Integer.valueOf(score).toString());
 					break;
 				} else {
 					break;
@@ -412,16 +385,6 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 			}
 		}
 
-		return tile;
-	}
-
-	public static void printTile(Tile[][] tile) {
-		for (int i = 0; i < tile.length; i++) {
-			for (int j = 0; j < tile[i].length; j++) {
-				System.out.print(tile[i][j]);
-			}
-			System.out.println();
-		}
 	}
 
 }
