@@ -23,12 +23,14 @@ import mainMenuCreating.GameSelectView;
 public class NullLayout2048 extends JFrame implements KeyListener {
 
 	// private RunGUI NullLayout2048;
-	private JPanel nullPanel1, nullPanel2, nullPanel3;
+	private static JPanel nullPanel1;
+	private JPanel nullPanel2;
+	private static JPanel nullPanel3;
 	// public JTextField textFieldBig;
 	public JPanel textFieldBig;
 	private JPanel panel;
 	static JTextField scoreBoard;
-	
+
 	private static final int SIZE = 4;
 	static int score = 0, highScore = 0; // 현재 점수, 최고 점수
 	// private GameSelectView GameSelectView;
@@ -226,7 +228,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 		this.setFocusable(true); // focus를 락온
 		setFocusTraversalKeysEnabled(false); // 다중 키를 인식해라
 		this.setVisible(true);
-		
+
 		setGame();
 		putRandom();
 
@@ -285,7 +287,7 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 				}
 			}
 		}
-		
+
 		return result;
 	}
 
@@ -309,13 +311,15 @@ public class NullLayout2048 extends JFrame implements KeyListener {
 			int[] ran = random(); // ran[0]:세로 ran[1]:가로
 
 			if (tf[ran[0]][ran[1]].getText().equals("")) {
-				 tf[ran[0]][ran[1]].setText(Integer.toString(ran[2] * 2));
+				tf[ran[0]][ran[1]].setText(Integer.toString(ran[2] * 2));
 				break;
 			}
 		}
-		System.out.println("더 이상 움직일 타일이 없습니다.");
-		System.out.println("게임 종료");
-		return;
+		if (isEmpty() == false) {
+			JOptionPane.showMessageDialog(nullPanel3, "게임을 종료합니다.\n 점수 : " + score + "점");
+			
+			new NullLayout2048();
+		}
 	}
 
 	public static void setGame() {
